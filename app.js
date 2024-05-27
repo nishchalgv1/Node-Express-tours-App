@@ -9,9 +9,14 @@ const port = process.env.PORT || 3000;
 const tours = JSON.parse(fs.readFileSync(`${__dirname}/dev-data/data/tours-simple.json`));
 app.get('/api/v1/tours', (req, res) => {
   //this callback function is called route handler
-  console.log("hello", tours);
   res.status(200).json({
     status: "success",
+    /*
+    when we are sending multiple responses is to include 
+    a field called results with the number of results that we are sending.
+    It makes very easy for the client to get very quick information about the data it is receiving.
+     */
+    results: tours.length,
     data:{
       tours
     }

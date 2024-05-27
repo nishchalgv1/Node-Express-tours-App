@@ -166,4 +166,13 @@ When someone hits this route, we simply want to send back all the tours. /tours 
 
 Before we can send data back to the client we have to read it first from the json file.
 
-We don't read the data inside route handler but we do it before
+We don't read the data inside route handler but we do it before.
+------------------------
+The top level code is only executed once which is right after the application startup.
+
+`${__dirname}/dev-data/data/tours-simple.json
+
+dirname is the folder where the current script is located.
+
+JSON.parse() converts json object into an array of javascript object
+---------------------------------------------------------------------
