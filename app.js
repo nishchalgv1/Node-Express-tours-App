@@ -3,6 +3,9 @@ const express = require('express');
 const app = express();
 
 const port = process.env.PORT || 3000;
+//using express.json() middleware so that the req object has access to the body property and the data that was
+//sent on the request is available for us on the req.body
+app.use(express.json());
 
 
 //before we can send the tours data, we need to first read it from the json file
@@ -20,6 +23,22 @@ app.get('/api/v1/tours', (req, res) => {
     data:{
       tours
     }
+  })
+})
+
+app.post('/api/v1/tours', (req, res) => {
+  const newId = tours[tours.length - 1].id + 1;
+  const newTour = Object.assign({id: newId}, req.body);
+
+  tours.push(newTour);
+  fs.writeFile(`${__dirname}/dev-data/data/tours-simple.json`, JSON.stringify(tours), err => {
+    res.status(201).json({
+      //we use 201 status code when a new resource is created on the server
+      status: "success",
+      data: {
+        tour: newTour
+      }
+    })
   })
 })
 app.listen(port, () => {

@@ -182,5 +182,11 @@
             "2022-01-16,10:00",
             "2022-12-12,10:00"
         ]
+    },
+    {
+        "id": 9,
+        "name": "The Himachal Diaries",
+        "duration": "7days",
+        "difficuly": "easy"
     }
 ]

@@ -146,33 +146,55 @@ nextPage = currentPage = 1
 send(nextPage)
 ---------------------
 In other words, the server would have to remember the previous request. It would have to handle the state server side and that is exactly what we want to avoid in RESTful APIs.
-
 Instead in this case, we should create a /tours/page endpoint and pass the number 6 to it in order to request page no 6.
-
 send(6). This way we would handle state on the client because on a client we would already knwo that we're on page five so all we had to do is just to add 1 and then request page no 6. So the server doesn't have to remember anything in this case.
-
 All it has to do is to send data for page number 6 as we requested.
 
 ------------------------------------------------------------------------------------
 /api/v1/tours,: It's a good practice to specify the API version. In case you want to do some changes to your API you can do that but simply then on v2 without breaking everyone who is still using v1.
-
 So you can branch off, create a new version of your api but all users can still be using it.
-
 the second parameter that our route accepts a callback function which we call routeHandler
-
 app.get('/api/v1/tours/', (req, res)).
-
 When someone hits this route, we simply want to send back all the tours. /tours : tours is the resource here.
-
 Before we can send data back to the client we have to read it first from the json file.
-
 We don't read the data inside route handler but we do it before.
 ------------------------
 The top level code is only executed once which is right after the application startup.
-
 `${__dirname}/dev-data/data/tours-simple.json
-
 dirname is the folder where the current script is located.
-
 JSON.parse() converts json object into an array of javascript object
 ---------------------------------------------------------------------
+POST requests
+-----------------
+Implement a route handler for post request so that we can add a new tour to our data set.
+
+POST request: It is made to create a new tour.
+With a post request we can send data from the client to the server 
+and this data is then ideally available on the request.
+The request object is what holds all the data, all the information, about the request that was done.
+And if that request contains some data that was sent that data should be on the request.
+Out of the box, Express does not put that body data on the request object. 
+In order to have that data available we have to use something called middleware.
+app.use(rexpress.json())This express.json() is a middleware. 
+A middleware is a function that can modify incoming requests
+--------------------------------------
+It's called middleware because it stands between in the middle of the request and the response.
+
+So it's just a step that the request goes through while it's being processed.
+
+And the step that the request goes through in this e.g. is simply that the data from the body is added to it. So it's added to the request object by using this middleware.
+req.body
+
+body is the property that is gonna be available on the request because we used that middleware.
+
+We always need to send something in order to finish so called request/response cycle
+----------------------------------------------------------------------------------------
+first thing we need to do is to figure out the id of the new object.
+
+When we create a new object we never specify the id of the new object. The database usually takes care of that.
+
+A new object usually automatically gets it's new id.
+
+Take the id of the last object and add 1 to it.
+
+Object.assign allows us to create a new object by merging two existing objects together
