@@ -1,0 +1,169 @@
+//Routing basically means to determine how an application responds 
+//to a certain client request, to a certain URL. 
+//It's not just the URL but also the http method which is used for the request.
+
+------------------------------------------------------------------------------------------------------
+const app = express()
+this express is a function which upon calling will add a bunch of methods to 
+our app variable here and the first one that we use is app.listen to start up a server.
+app.listen(port, () => {
+
+//this is a callback function, it will be called as soon as the server starts listening
+}).
+----------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------
+res.status.json() 
+//By using this json methode here will automatically set our content type to application/json
+---------------------------------------------------------------------------------------------------
+APIs
+------------------------------------------------
+API basically stands for Application Programming Interface.
+
+It's basically a piece of software that can be used by another piece of software, in order to allow applications to talk to each other.
+
+Web APIs : where we simply build an app that sends data to a client whenever a request comes in.
+
+Imagine we have our app running on a server and we have a client. So infact we effectively have two pieces of software talking to each other.
+
+APIs are not only used to send data and aren't always related to web development or javascript.
+
+So the application in API can be many different things as long as the piece of software is relatively stand alone.
+
+EXAMPLE: Node file System or Http Modules. We can say they are small pieces of software and we can use them. We can interact with them by using their API.
+
+When we use the readFile() function from the fs module we are actually using the fs API or NODE APIs: refers to the core node modules that we can interact with.
+
+When we do DOM manipulation in the browser, we are not only using the Javascript language itself, we are using the DOM API that the browser exposes to us.
+
+----------------------------------------------------
+REST APIs--------
+-----------------------
+REST which stands for Representational  States Transfer is a way of building web apis in a logical way making them easy to consume because we build an API for ourselves  or for others to consume.
+
+To build RESTful APIs which means API following the REST Architecture we need to follow a couple of principles.
+
+1. We need to separate our API into logical resources. 
+
+2. These resources should then be exposed which means to be made available using structured, resource-based URLs to perform different actions on data like reading, creating or deleting data,  3. the API should use the right HTTP methods and not the URL.
+
+4.The data that we actually send back to the client or that we receive from the client should usually use the JSON data format
+
+5. They must be stateless
+-------------------------------
+The key abstraction of information in REST is a resource and therefore all the data that we wanna share in the API should be divided into logical resources.
+
+In the context of REST, 
+
+Resource: It is an Object or representation of something which has data associated to it.
+
+Any information that can be named can be a resource.
+
+E.g. tours, users, reviews.
+
+It just has to be a name though, not a verb.
+
+2. Expose: WE need to expose which means to make available the data using some structured URLs that the client can send a request to.
+
+E.g. https://www.natours.com/addNewTour
+
+This entire address is called the URL and this addNewTour is called an API endpoint.
+
+So our api will have many endpoints just like these fictional endpoints -- 
+/getTour, /updateTour, /deleteTour, /getToursByUser. 
+Each of these will send different data back to the client or also perform different actions.
+-----------------------------------------
+NOTE: Endpoints should contain only resources (nouns) and use HTTP methods for actions.
+
+These endpoints do not follow the third rule which says that we should only use the HTTP methods in order to perform actions on data. So endpoints should only contains resources and not the actions that can be performed on them because they will quickly become a nightmare to maintain.
+
+/getTour should be name as  /tours and GET HTTP method should be used  and send the data whenever a GET request is made to this endpoint. When a client uses GET HTTP method to access the endpoint because now verb is in the HTTP method that is GET and not in the URL.
+
+NOTE: Common practice is to always use resource name in plural like /tours and not /tour
+Calling that endpoint we get all the tours that are in our database
+------------------------
+We want a tour with id we add id after /tours/7 or in a search query.
+
+The first HTTP method or verb that we can respond to is GET and it's used to perform the Read operation on data.
+
+POST HTTP method should be used If the client wants to create a new resource in our database i.e. a new tour
+
+A POST request can be used to send data to the server. So it makes sense to use POST in order to create new resources. In this case no id will be sent because the server should automatically figure out the ID for the new resource. The end point name is the same as before
+
+-------------------------------
+If the /tours endpoint is accessed with GET, we send data to the client. But if the same endpoint is accessed with POST. we expect data to come in with a request so that we can then create a new resource on the server side.
+
+There should also be the availability to update resources and for that either a PUT or a PATCH request should be made to the endpoint. 
+
+The difference b/w them is that with PUT, the client is supposed to send the entire updated object.
+
+PATCH: The client is supposed to send only the part of the object that has been changed. But both of them have the ability to send data to the server.
+
+PUT or PATCH are used to update an existing resource
+----------------------------------------------------------
+DELET HTTP method: to delete a resource
+
+ID or some other unique identifier of the resource to be deleted should be part of the URL.
+
+To perform this kind of request the client must be authenticated, basically log into your app.
+
+CRUD operations:
+
+Create, Read, Update and Delete.
+
+There are operations which are not CRUD e.g. a log in or a search operation. These are not related to a particular resource and they are not CRUD either but we still can create endpoints for them like /login or /search
+
+-------------------------
+/getToursByUser can simply be translated to /users/3/tours.
+
+This endpoint could send data about all the tours that user no 3 has booked.
+
+Requesting tour no 9 to be deleted from user no 3.
+
+/users/3/tours/9
+---------------------------------------------------------------
+About the data that the client receives or that the server receives from the client, usually we use the JSON data format.
+
+JSON is a very lightweight data interchange format which is heavily used by web apis coded in any programming language.
+
+Let say we have some json data in our database we could send it back like this to the client and we do some response formatting before sending. There are a couple of standards for this but we are gonna use a very simple one called Jsend. We simple create a new object and then add a status message to it in order to inform the client whether the request was a success, fail or error and then we put our original data into a new object called data.
+
+Wrapping the data into an additional object is called Enveloping and it's a common practice to mitigate some security issues and other problems
+-------------------------------------------------------
+A RESTful API should always be stateless
+----------------
+Stateless RESTful API: All state is handled on the client. This means that each request must contain all the information necessary to process a certain request. The server should not have to remember previous request.
+
+And state simply refers to a piece of data in the application that might change over time. For e.g. whether a certain user is logged in or on a page with a list with several pages what the current page is.
+
+The fact that the state should be handled on the client means that each request must contain all the information that is necessary to process a certain request on the server.
+
+E.g list with several pages: Let say we are currently on page 5 and want to move forward to page 6.
+
+So we could have a simple end point called /tours/nextPage and submit a request to it. But then the server would then have to figure out what the current page is and based on that send the next page to the client.
+
+nextPage = currentPage = 1
+
+send(nextPage)
+---------------------
+In other words, the server would have to remember the previous request. It would have to handle the state server side and that is exactly what we want to avoid in RESTful APIs.
+
+Instead in this case, we should create a /tours/page endpoint and pass the number 6 to it in order to request page no 6.
+
+send(6). This way we would handle state on the client because on a client we would already knwo that we're on page five so all we had to do is just to add 1 and then request page no 6. So the server doesn't have to remember anything in this case.
+
+All it has to do is to send data for page number 6 as we requested.
+
+------------------------------------------------------------------------------------
+/api/v1/tours,: It's a good practice to specify the API version. In case you want to do some changes to your API you can do that but simply then on v2 without breaking everyone who is still using v1.
+
+So you can branch off, create a new version of your api but all users can still be using it.
+
+the second parameter that our route accepts a callback function which we call routeHandler
+
+app.get('/api/v1/tours/', (req, res)).
+
+When someone hits this route, we simply want to send back all the tours. /tours : tours is the resource here.
+
+Before we can send data back to the client we have to read it first from the json file.
+
+We don't read the data inside route handler but we do it before
