@@ -228,3 +228,13 @@ When we multiply a string that looks like a number with another number will auto
 how to specify parameters in the URL
 
 how to read parameters from the URL by using req.parms
+-----------------------------------------------------------------
+ We have two http methods to update data. PUT and PATCH.
+
+And with PUT, we expect that our application receives the entire new updated object and with PATCH, we only expect the properties that should actually be updated on the object.
+
+Use patch to update the properties that were updated
+
+We expect a PATCH request to come in on the URL. We also need the id of the tour that needs to be updated.
+
+When we have a delete request, the response is usually 204 means no content that's because we usually don't send any data back, instead we just send null

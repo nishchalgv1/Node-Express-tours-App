@@ -64,6 +64,22 @@ app.patch('/api/v1/tours/:id', (req, res) => {
   })
 })
 
+//handling delete requests 
+app.delete('/api/v1/tours/:id', (req, res) => {
+  if(req.params.id * 1 > tours.length){
+    return res.status(404).json({
+      status: "fail",
+      message: "Invalid Id"
+    })
+  }
+
+  res.status(204).json({
+    //204 status code means no content
+    status: "success",
+    data: null
+  })
+})
+
 app.post('/api/v1/tours', (req, res) => {
   const newId = tours[tours.length - 1].id + 1;
   const newTour = Object.assign({id: newId}, req.body);
