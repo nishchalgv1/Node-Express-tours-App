@@ -25,6 +25,29 @@ app.get('/api/v1/tours', (req, res) => {
     }
   })
 })
+//returning a tour by id url parameters, the variable that we define in the route are url parameters
+//they are made available for us in req.params
+app.get('/api/v1/tours/:id', (req, res) => {
+  //get tour by id
+  //first get the id
+  const id = req.params.id * 1;
+  /*Check if the id is larger than the length of the tours array and if it is longer 
+  then we can send back a  404 error saying that we could not find any tour for the given ID. */
+  if(id > tours.length){
+    return res.status(404).json({
+      status: "fail",
+      message: "Invalid Id"
+    })
+  }
+  const tour = tours.find(elem => elem.id === id);
+ 
+  res.status(200).json({
+    status: "success",
+    data:{
+      tour
+    }
+  })
+})
 
 app.post('/api/v1/tours', (req, res) => {
   const newId = tours[tours.length - 1].id + 1;

@@ -198,3 +198,33 @@ A new object usually automatically gets it's new id.
 Take the id of the last object and add 1 to it.
 
 Object.assign allows us to create a new object by merging two existing objects together
+----------------------------------------------------------------------------
+We need to define a route which can accept a variable.
+
+req.params is where all the parameters, all the variables that we define in the route are stored.
+
+api/v1/tours/:id : so these variables here in the URL are called parameters and they are available in req.params for us to use.
+
+req.params is a very nice object which automatically assigns the value to our variable, so our parameter that we defined.
+
+We could define multiple: /api/v1/tours/:id/:x/:y
+
+OPTIONAL Parameter: We can make any parameter optional we can or we can not specify it in the url
+
+like api/v1/tours/:x/:y?
+-----------------------------------
+.find() is a regular JS function used on arrays
+
+ tours.find() 
+
+It will loop through the array and in each of the iterations we will have access to the current element and we will return either true or false in each of the iterations.
+
+find() method will create an array which only contains the element where this comparison here turns out to be true.
+
+When we multiply a string that looks like a number with another number will automatically be converted into a number.
+
+ status: fail is sent whenever we have 400 status code
+
+how to specify parameters in the URL
+
+how to read parameters from the URL by using req.parms
