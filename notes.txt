@@ -238,3 +238,39 @@ Use patch to update the properties that were updated
 We expect a PATCH request to come in on the URL. We also need the id of the tour that needs to be updated.
 
 When we have a delete request, the response is usually 204 means no content that's because we usually don't send any data back, instead we just send null
+---------------------------------------------------------------------
+All About middleware
+----------------------------------
+To start the request-response cycle, our Express app receives a request when someone hits a server for which it will then create a request and response object. That data will then be used and processed in order to generate and send back a meaningful response.
+
+In order to process that data, In express we use something called middleware which can manipulate the request and response object or really execute any other code that we like.
+
+Middleware is mostly about the request.
+
+It's called middleware because it's a function that is executed between in the middle of receiving the request and sending the response.
+
+In express everything is middleware.
+
+express.json) is also called the body parser
+-------------------------------------------------
+To start the request response cycle our express app receives a request when someone hits a server for which it will then create a request and response object. That data will then be used and processed in order to generate and send back a meaningful response. In order to process that data in express we use something called middleware which can manipulate the request or the response object or really execute any other code that we like.
+
+So middleware doesn't always have to be just about the request or the response object but it is usually is mostly about the request.
+
+We used middleware before. we used express.json() to get access to the request body on the request object
+
+It's called middleware because it's a function that is executed between in the middle of receiving the request and sending the response. In express, everything is middleware even our route definitions.
+
+Even if we define our route we can think of the route handler functions that we wrote as middleware functions. They are middleware functions that are only executed for certain routes.
+
+Some examples of middleware functions are express.json() which is also called body-parser. Some logging functionality or setting some http headers.
+
+All middleware together that we use in our app is called middleware stack. The order of the middleware in the stack is actually defined by the order they are defined in the code. so the middleware that appears first in the code is executed before one that appears later
+----------------------------------
+Our request and response that were created in the beginning go through each middleware where they are processed or where just some other code is executed.  Then at the end of each middleware function a next function is called which is a function that we have access to in each middleware function just like the request and response objects.
+
+When we call the next function, the next middleware in the stack will be executed with the exact same request and response object and that happens with all the middlewares until we reach the last one.
+
+Just like this the initial request and response object go through each middleware step by step. And you can think of this whole process as a kind of pipeline where our data go through.
+
+The last middleware function is usually a route handler function. In this handler we do not call the next function to move to the next middleware. Instead we finally send the response data back to the client. And like this we then finish the so-called request and response cycle
