@@ -273,4 +273,4 @@ When we call the next function, the next middleware in the stack will be execute
 
 Just like this the initial request and response object go through each middleware step by step. And you can think of this whole process as a kind of pipeline where our data go through.
 
-The last middleware function is usually a route handler function. In this handler we do not call the next function to move to the next middleware. Instead we finally send the response data back to the client. And like this we then finish the so-called request and response cycle
+The last middleware function is usually a route handler function. In this route handler function we do not call the next function to move to the next middleware. Instead we finally send the response data back to the client. And like this we then finish the so-called request and response cycle
