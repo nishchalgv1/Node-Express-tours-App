@@ -1,10 +1,15 @@
 const fs = require('fs');
 const express = require('express');
 const app = express();
+const morgan = require('morgan');
 
 const port = process.env.PORT || 3000;
 //using express.json() middleware so that the req object has access to the body property and the data that was
 //sent on the request is available for us on the req.body
+
+//MIDDLEWARES
+app.use(morgan('dev'));
+
 app.use(express.json());
 
 //when we write app.use(here pass the function) then this function is added to the middleware stack
@@ -110,6 +115,7 @@ const deleteTour = (req, res) => {
 // app.delete('/api/v1/tours/:id', deleteTour);
 
 //better way
+//ROUTES
 app
 .route('/api/v1/tours')
 .get(getAllTours)
@@ -122,6 +128,7 @@ app
 .delete(deleteTour);
 
 
+//START SERVER
 app.listen(port, () => {
   console.log(`App running on port ${port}...`);
 })

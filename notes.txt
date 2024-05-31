@@ -293,3 +293,16 @@ app.use((req, res, next) => {
 })This middleware here applies to each and every single request and that's because we didn't specify any route.
 
 All route handlers are kind of middleware themselves. They are simply middleware functions that only apply for a certain URL
+-------------------------
+USING 3rd PARTY MIDDLEWARE MORGAN
+Morgan: A very populare logging middleware.
+
+A middleware that's gonna allow us to see request data right in the console.
+
+>> npm install morgan or npm i morgan.
+
+It's not a development dependency, it's a regular dependency.
+
+app,use() here in we can specify argument to specify how we want the logging to look like.
+
+Calling this morgan function will return a function similar to other middlewares
