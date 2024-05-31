@@ -7,6 +7,21 @@ const port = process.env.PORT || 3000;
 //sent on the request is available for us on the req.body
 app.use(express.json());
 
+//when we write app.use(here pass the function) then this function is added to the middleware stack
+
+
+//we have defined this middleware here so it will be accessible to all the routes that are defined after it.
+//If we define this after a route, then this middleware won't execute because the routeHandler for a certain
+//route or endpoint would already have ended the request-response cycle by sending a response
+app.use((req, res, next) => {
+  console.log('Hello from the Middleware!');
+  next();
+})
+
+app.use((req, res, next) => {
+  req.requestTime = new Date().toISOString();
+  next();
+})
 
 //read the data from the JSON file
 const tours = JSON.parse(fs.readFileSync(`${__dirname}/dev-data/data/tours-simple.json`));
@@ -24,8 +39,8 @@ const getAllTours = (req, res) => {
 }
 
 const getTour = (req, res) => {
-  const newId = (req.params.id) * 1;
-  if(newId > tours.length){
+  const id = (req.params.id) * 1;
+  if(id > tours.length){
     return res.status(404).json({
       status: "fail",
       message: "Invalid ID"
@@ -52,7 +67,8 @@ const createTour = (req, res) => {
       //we use 201 status code when a new resource is created on the server
       status: "success",
       data: {
-        tour: newTour
+        tour: newTour,
+        requestedAt: req.requestTime
       }
     })
   })
